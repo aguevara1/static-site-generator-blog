@@ -9,6 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/.github/workflows/workflow.yml@main
     - uses: aguevara1/static-site-generator-blog@main
       with:
         args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
