@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout code
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@main
-          with:
-          sparse-checkout: |
+        uses: actions/checkout@v4
+        uses: actions/checkout@main
+        with:
+           sparse-checkout: |
               _site
 env:
 AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
