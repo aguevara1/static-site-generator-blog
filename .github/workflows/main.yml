@@ -7,20 +7,15 @@ on:
 
 jobs:
   build-deploy:
-    name: Build and Deploy for Aurora blog
     runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout code
-        uses: actions/checkout@v4
-      # uses: actions/checkout@main
+    steps:
+        uses: actions/checkout@master
+        uses: jakejarvis/s3-sync-actions@master
         with:
+           args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
            sparse-checkout: |
               _site
-      
-      - name: Deploy to S3
-        run: |
-          aws s3 sync _site/ s3://${AWS_S3_BUCKET}/ --acl public-read --delete
-
+              
 env:
   AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
