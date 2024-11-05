@@ -13,9 +13,7 @@ jobs:
       with:
         sparse-checkout: |
           _site
-        run: |
-          aws s3 sync _site/ s3://${AWS_S3_BUCKET}/ --acl public-read --delete
-
+          
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
