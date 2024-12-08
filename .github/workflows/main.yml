@@ -13,8 +13,8 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: 'python3 3.10'
-
-    - name: Install dependencies and build site
+    
+    # Install dependencies and build site
     - run: |
         pip install aurora-ssg
         aurora build
