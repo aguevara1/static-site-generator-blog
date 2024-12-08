@@ -15,8 +15,10 @@ jobs:
         python-version: 'python3 3.10'
 
     - name: Install dependencies and build site
-    - run: pip install aurora-ssg
-    - run: aurora build
+    - run: |
+        pip install aurora-ssg
+    - run: |
+        aurora build
         
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
