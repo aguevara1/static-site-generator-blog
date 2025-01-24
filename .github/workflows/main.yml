@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
       with:
-        python-version: 'python3 3.13'
+        python-version: 'python3 3.10'
     
     # Install dependencies and build site
     - run: |
