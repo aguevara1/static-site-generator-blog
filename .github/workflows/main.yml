@@ -26,9 +26,6 @@ jobs:
         aws-region: 'us-east-1'
         source_dir: '_site'
 
-    - name: Install AWS CLI
-      run: sudo apt-get install -y awscli
-
     - name: Sync files to S3
       run: |
         aws s3 sync source_dir s3://${{ secrets.AWS_S3_BUCKET }} --delete
