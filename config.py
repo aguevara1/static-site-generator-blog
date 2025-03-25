@@ -1,7 +1,7 @@
 import os
 
 BASE_URLS = {
-    "local": "http://localhost:8000",
+   # "local": "http://localhost:8000",
     "production": "alldev.click",
 }
 
