@@ -36,8 +36,9 @@ a {
 }
 .photo-grid img {
     width: 50%;
-    height: auto;
+    height: 600px;
     border-radius: 1em;
+
 }
 footer {
     margin-top: 2em;
