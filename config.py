@@ -2,7 +2,7 @@ import os
 
 BASE_URLS = {
    # "local": "http://localhost:8000",
-    "production": "https://alldev.click",
+    "production": "alldev.click",
 }
 
 SITE_ENV = os.environ.get("SITE_ENV", "production")
