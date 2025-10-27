@@ -12,17 +12,67 @@ body {
     max-width: 35em;
     margin: auto;
 }
+
+/* === NAVIGATION BAR === */
 nav {
-    padding-top: 1em;
+  display: flex;
+  justify-content: flex-start; /* keep everything left-aligned */
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 1em 0;
+  gap: 3em; /* space between logo and nav links */
 }
+
+/* Logo styling */
+.logo a {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+/* Nav list layout */
 nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  display: flex;               /* horizontal layout for links */
+  flex-direction: row;
+  gap: 1.5em;                  /* space between each link */
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
+
+/* Link styling */
 nav a {
-    margin-right: 1em;
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  padding-bottom: 0.25em;
+  border-bottom: 2px solid transparent;
 }
+
+nav a:hover,
+nav a:focus {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Responsive (mobile view): stack links vertically under logo */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75em;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+  }
+}
+
+
 a {
     color: var(--secondary-color);
     text-decoration: none;
