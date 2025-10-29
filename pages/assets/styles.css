@@ -12,8 +12,9 @@ html {
 }
 
 body {
-    max-width: 35em;
-    margin: auto;
+    width: 100%;
+    margin: 0;
+    padding: 0 1em; /* 1em padding on left/right */
 }
 
 /* === NAVIGATION BAR === */
