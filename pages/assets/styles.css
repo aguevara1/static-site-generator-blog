@@ -17,6 +17,10 @@ body {
     padding: 0 1em; /* 1em padding on left/right */
 }
 
+main {
+    width: 100%;
+}
+
 /* === NAVIGATION BAR === */
 nav {
     display: flex;
@@ -25,6 +29,8 @@ nav {
     border-bottom: 1px solid #eee;
     padding: 1em 0;
     gap: 3em; /* space between logo and nav links */
+    width: 100%; /* make nav stretch across the viewport */
+    box-sizing: border-box; /* include padding in width */
 }
 
 /* Logo styling */
