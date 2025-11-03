@@ -86,6 +86,24 @@ nav li a:focus {
     }
 }
 
+/* CTA Button */
+.cta-button {
+  display: inline-block;
+  background: var(--secondary-color);
+  color: #fff;
+  padding: 0.75em 1.5em;
+  border-radius: 0.5em;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background: var(--primary-color);
+}
+
+
+
 /* Generic links outside nav */
 a {
     color: var(--secondary-color);
