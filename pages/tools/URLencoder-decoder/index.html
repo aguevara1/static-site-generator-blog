@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Encoder / Decoder | AllDev</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #72afff;
+            --secondary-color: #1e80ff;
+        }
+
+        * {
+            font-family: 'Asap', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        header h1 {
+            color: var(--secondary-color);
+            margin-top: 1em;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+        }
+
+        section {
+            margin-top: 2em;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.75em;
+            margin-bottom: 1em;
+            font-family: 'Asap', sans-serif;
+            font-size: 1em;
+            border-radius: 0.5em;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1em;
+            margin-bottom: 1em;
+        }
+
+        button {
+            padding: 0.5em 1em;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 0.5em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--primary-color);
+        }
+
+        .description, .why-use {
+            margin-bottom: 1em;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3em;
+            margin-bottom: 2em;
+            border-top: 1px solid #ccc;
+            padding-top: 1em;
+            color: #555;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AllDev Tools</h1>
+    </header>
+
+    <main>
+        <section id="url-tool">
+            <h2>URL Encoder / Decoder</h2>
+
+            <p class="description"><strong>Quickly encode text for URLs or decode URL-encoded strings back to readable text.</strong></p>
+
+            <textarea id="url-input" placeholder="Enter text or URL here..." rows="5"></textarea>
+
+            <div class="button-group">
+                <button id="encode-btn">Encode</button>
+                <button id="decode-btn">Decode</button>
+                <button id="clear-btn">Clear</button>
+            </div>
+
+            <h3>Result:</h3>
+            <textarea id="url-output" rows="5" readonly></textarea>
+
+            <p class="why-use"><strong>Why use this tool?</strong> Instant, repeatable, private, and educational. Learn how URL encoding works while quickly converting text for web development tasks — all in your browser.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p><em>made with 💜 and coffee.</em></p>
+        <p><a href="/about">About</a></p>
+    </footer>
+
+    <script>
+        const input = document.getElementById('url-input');
+        const output = document.getElementById('url-output');
+        const encodeBtn = document.getElementById('encode-btn');
+        const decodeBtn = document.getElementById('decode-btn');
+        const clearBtn = document.getElementById('clear-btn');
+
+        encodeBtn.addEventListener('click', () => {
+            output.value = encodeURIComponent(input.value);
+        });
+
+        decodeBtn.addEventListener('click', () => {
+            try {
+                output.value = decodeURIComponent(input.value);
+            } catch (e) {
+                output.value = "Invalid URL-encoded string!";
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
+            output.value = '';
+        });
+    </script>
+
+</body>
+</html>
