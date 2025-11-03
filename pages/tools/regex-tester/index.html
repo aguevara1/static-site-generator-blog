@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Tester | AllDev Tools</title>
+    <style>
+        body {
+            font-family: 'Asap', sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #1e80ff;
+        }
+
+        label {
+            display: block;
+            margin-top: 1em;
+            font-weight: 600;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.5em;
+            margin-top: 0.3em;
+            border: 1px solid #ccc;
+            border-radius: 0.4em;
+            font-family: monospace;
+        }
+
+        textarea {
+            min-height: 150px;
+        }
+
+        .matches {
+            margin-top: 1em;
+            padding: 1em;
+            border-radius: 0.5em;
+            background: #f1f1f1;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .highlight {
+            background-color: #72afff;
+            color: white;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Regex Tester</h1>
+    <p>Test your Regular Expressions live in the browser!</p>
+
+    <label for="pattern">Regex Pattern:</label>
+    <input type="text" id="pattern" placeholder="e.g. \d+">
+
+    <label for="text">Text to Test:</label>
+    <textarea id="text" placeholder="Paste your text here..."></textarea>
+
+    <h2>Matches:</h2>
+    <div class="matches" id="matches"></div>
+
+    <script>
+        const patternInput = document.getElementById('pattern');
+        const textInput = document.getElementById('text');
+        const matchesDiv = document.getElementById('matches');
+
+        function updateMatches() {
+            const pattern = patternInput.value;
+            const text = textInput.value;
+
+            if (!pattern) {
+                matchesDiv.textContent = '';
+                return;
+            }
+
+            try {
+                const regex = new RegExp(pattern, 'g'); // global match
+                const highlighted = text.replace(regex, match => `<span class="highlight">${match}</span>`);
+                matchesDiv.innerHTML = highlighted;
+            } catch (err) {
+                matchesDiv.textContent = 'Invalid regex pattern!';
+            }
+        }
+
+        patternInput.addEventListener('input', updateMatches);
+        textInput.addEventListener('input', updateMatches);
+    </script>
+</body>
+</html>
