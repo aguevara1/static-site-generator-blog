@@ -25,9 +25,37 @@
             padding: 0 20px;
         }
 
-        header h1 {
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .logo a {
+            font-weight: 700;
             color: var(--secondary-color);
-            margin-top: 1em;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5em;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav li a:hover {
+            color: var(--primary-color);
         }
 
         h2 {
@@ -42,7 +70,6 @@
             width: 100%;
             padding: 0.75em;
             margin-bottom: 1em;
-            font-family: 'Asap', sans-serif;
             font-size: 1em;
             border-radius: 0.5em;
             border: 1px solid #ccc;
@@ -96,9 +123,15 @@
 </head>
 <body>
 
-    <header>
-        <h1>AllDev Tools</h1>
-    </header>
+    <nav>
+        <div class="logo"><a href="/">AllDev</a></div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/tools/index.html">Tools</a></li>
+            <li><a href="/tutorials">Blog</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+    </nav>
 
     <main>
         <section id="url-tool">
