@@ -51,6 +51,7 @@ nav ul {
     list-style: none;            /* remove bullets */
     margin: 0;
     padding: 0;
+    margin-left: auto;    /* push links to the right */
 }
 
 /* Nav links styling */
