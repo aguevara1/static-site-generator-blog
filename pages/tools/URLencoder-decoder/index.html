@@ -20,20 +20,33 @@
             box-sizing: border-box;
         }
 
+        html {
+            border-top: 10px solid var(--primary-color);
+        }
+
         body {
             margin: 0;
             padding: 0 20px;
         }
 
+        main {
+            max-width: 800px;
+            margin: 2em auto;
+        }
+
         nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
+            border-bottom: 1px solid #eee;
             padding: 1em 0;
-            border-bottom: 1px solid #ccc;
+            gap: 3em;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .logo a {
+            font-size: 1.25em;
             font-weight: 700;
             color: var(--secondary-color);
             text-decoration: none;
@@ -41,8 +54,9 @@
 
         nav ul {
             display: flex;
-            list-style: none;
+            flex-direction: row;
             gap: 1.5em;
+            list-style: none;
             margin: 0;
             padding: 0;
         }
@@ -51,25 +65,30 @@
             text-decoration: none;
             color: var(--secondary-color);
             font-weight: 500;
-            transition: color 0.3s ease;
+            padding-bottom: 0.25em;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
         }
 
-        nav li a:hover {
+        nav li a:hover,
+        nav li a:focus {
             color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        h1 {
+            color: var(--secondary-color);
         }
 
         h2 {
             color: var(--secondary-color);
         }
 
-        section {
-            margin-top: 2em;
-        }
-
         textarea {
             width: 100%;
             padding: 0.75em;
             margin-bottom: 1em;
+            font-family: 'Asap', sans-serif;
             font-size: 1em;
             border-radius: 0.5em;
             border: 1px solid #ccc;
@@ -119,6 +138,20 @@
         footer a:hover {
             color: var(--primary-color);
         }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -134,24 +167,23 @@
     </nav>
 
     <main>
-        <section id="url-tool">
-            <h2>URL Encoder / Decoder</h2>
+        <h1>URL Encoder / Decoder</h1>
 
-            <p class="description"><strong>Quickly encode text for URLs or decode URL-encoded strings back to readable text.</strong></p>
+        <p class="description"><strong>Quickly encode text for URLs or decode URL-encoded strings back to readable text.</strong></p>
 
-            <textarea id="url-input" placeholder="Enter text or URL here..." rows="5"></textarea>
+        <textarea id="url-input" placeholder="Enter text or URL here..." rows="5"></textarea>
 
-            <div class="button-group">
-                <button id="encode-btn">Encode</button>
-                <button id="decode-btn">Decode</button>
-                <button id="clear-btn">Clear</button>
-            </div>
+        <div class="button-group">
+            <button id="encode-btn">Encode</button>
+            <button id="decode-btn">Decode</button>
+            <button id="clear-btn">Clear</button>
+            <button id="copy-btn">Copy Result</button>
+        </div>
 
-            <h3>Result:</h3>
-            <textarea id="url-output" rows="5" readonly></textarea>
+        <h2>Result:</h2>
+        <textarea id="url-output" rows="5" readonly></textarea>
 
-            <p class="why-use"><strong>Why use this tool?</strong> Instant, repeatable, private, and educational. Learn how URL encoding works while quickly converting text for web development tasks — all in your browser.</p>
-        </section>
+        <p class="why-use"><strong>Why use this tool?</strong> Instant, repeatable, private, and educational. Learn how URL encoding works while quickly converting text for web development tasks — all in your browser.</p>
     </main>
 
     <footer>
@@ -165,6 +197,7 @@
         const encodeBtn = document.getElementById('encode-btn');
         const decodeBtn = document.getElementById('decode-btn');
         const clearBtn = document.getElementById('clear-btn');
+        const copyBtn = document.getElementById('copy-btn');
 
         encodeBtn.addEventListener('click', () => {
             output.value = encodeURIComponent(input.value);
@@ -181,6 +214,14 @@
         clearBtn.addEventListener('click', () => {
             input.value = '';
             output.value = '';
+        });
+
+        copyBtn.addEventListener('click', () => {
+            output.select();
+            output.setSelectionRange(0, 99999); // for mobile devices
+            navigator.clipboard.writeText(output.value)
+                .then(() => alert('Result copied to clipboard!'))
+                .catch(() => alert('Failed to copy.'));
         });
     </script>
 
