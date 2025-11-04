@@ -29,7 +29,6 @@ nav {
     align-items: center;
     border-bottom: 1px solid #eee;
     padding: 1em 0;
-    gap: 3em; /* space between logo and nav links */
     width: 100%; /* make nav stretch across the viewport */
     box-sizing: border-box; /* include padding in width */
     padding-left: 20px;   /* space on the left */
