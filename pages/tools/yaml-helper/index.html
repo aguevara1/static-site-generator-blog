@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAML Helper | AllDev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #72afff;
+      --secondary-color: #1e80ff;
+    }
+
+    body {
+      font-family: 'Asap', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    nav {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 1em 20px;
+      border-bottom: 1px solid #eee;
+      background: #fff;
+    }
+
+    .logo a {
+      font-size: 1.25em;
+      font-weight: 700;
+      color: var(--secondary-color);
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5em;
+      margin-left: 2em;
+      padding: 0;
+    }
+
+    nav li a {
+      text-decoration: none;
+      color: var(--secondary-color);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav li a:hover {
+      color: var(--primary-color);
+    }
+
+    main {
+      flex: 1;
+      padding: 2em;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: var(--secondary-color);
+    }
+
+    .tool-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 1em;
+      font-family: monospace;
+      font-size: 0.95em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+    }
+
+    button {
+      padding: 0.6em 1.2em;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--secondary-color);
+      color: #fff;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: var(--primary-color);
+    }
+
+    .output {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1em;
+      min-height: 80px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1em;
+      border-top: 1px solid #ccc;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      .buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo"><a href="/">AllDev</a></div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/tools/index.html">Tools</a></li>
+      <li><a href="/tutorials">Blog</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1>YAML Helper</h1>
+    <p>Write YAML confidently — format, validate, and convert in seconds.</p>
+
+    <div class="tool-container">
+      <textarea id="yamlInput" placeholder="Paste or write your YAML here..."></textarea>
+      
+      <div class="buttons">
+        <button onclick="validateYAML()">Validate</button>
+        <button onclick="beautifyYAML()">Beautify</button>
+        <button onclick="convertJSONtoYAML()">JSON → YAML</button>
+        <button onclick="convertYAMLtoJSON()">YAML → JSON</button>
+        <button onclick="copyYAML()">Copy</button>
+        <button onclick="downloadYAML()">Download</button>
+      </div>
+
+      <div class="output" id="yamlOutput">Output / Errors will appear here</div>
+    </div>
+  </main>
+
+  <footer>
+    <p><em>made with 💜 and coffee.</em></p>
+    <p><a href="/about">About</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script>
+    const input = document.getElementById('yamlInput');
+    const output = document.getElementById('yamlOutput');
+
+    function validateYAML() {
+      try {
+        jsyaml.load(input.value);
+        output.textContent = '✅ YAML is valid!';
+      } catch (e) {
+        output.textContent = '❌ Error: ' + e.message;
+      }
+    }
+
+    function beautifyYAML() {
+      try {
+        const obj = jsyaml.load(input.value);
+        output.textContent = jsyaml.dump(obj, { indent: 2 });
+      } catch (e) {
+        output.textContent = '❌ Error: ' + e.message;
+      }
+    }
+
+    function convertJSONtoYAML() {
+      try {
+        const obj = JSON.parse(input.value);
+        output.textContent = jsyaml.dump(obj, { indent: 2 });
+      } catch (e) {
+        output.textContent = '❌ Error: Invalid JSON';
+      }
+    }
+
+    function convertYAMLtoJSON() {
+      try {
+        const obj = jsyaml.load(input.value);
+        output.textContent = JSON.stringify(obj, null, 2);
+      } catch (e) {
+        output.textContent = '❌ Error: Invalid YAML';
+      }
+    }
+
+    function copyYAML() {
+      navigator.clipboard.writeText(output.textContent).then(() => {
+        alert('Copied to clipboard!');
+      });
+    }
+
+    function downloadYAML() {
+      const blob = new Blob([output.textContent], { type: 'text/yaml' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'output.yml';
+      link.click();
+    }
+  </script>
+</body>
+</html>
