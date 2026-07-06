@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 :root {
     --primary-color: #72afff;
     --secondary-color: #1e80ff;
@@ -30,7 +36,7 @@ nav {
     border-bottom: 1px solid #eee;
     padding: 1em 0;
     width: 100%; /* make nav stretch across the viewport */
-    box-sizing: border-box; /* include padding in width */
+  /*  box-sizing: border-box;  include padding in width */
     padding-left: 20px;   /* space on the left */
     padding-right: 20px;  /* space on the right */
 }
@@ -69,6 +75,49 @@ nav li a:focus {
     color: var(--primary-color);
     border-bottom: 2px solid var(--primary-color);
     background-color: transparent; /* prevent blue background override */
+}
+
+
+textarea {
+    display: block;
+    width: 80%;
+    height: 200px;
+    padding: 0.75em;
+    margin-bottom: 1em;
+    font-family: 'Asap', sans-serif;
+    font-size: 1em;
+    border-radius: 0.5em;
+    border: 1px solid #ccc;
+    resize: vertical;
+    }
+ button {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    }
+button:hover {
+    background-color: #0056b3;
+    }
+
+
+label {
+    display: block;
+    margin-bottom: 0.2rem;
+    margin-top: 1.2rem;
+} 
+
+#pattern{
+    width: 40%;
+}
+
+#yamlOutput{
+    margin-top: 20px;
 }
 
 /* Responsive (mobile view): stack links vertically under logo */
@@ -133,9 +182,8 @@ a:hover, a:focus {
 
 /* Footer */
 footer {
-  /*8  margin-top: 2em;
+    margin-top: 6em;
     padding-top: 1em;
-    border-top: 1px solid #ccc; */
     text-align: center;
 }
 
