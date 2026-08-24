@@ -37,6 +37,7 @@
         <button onclick="convertYAMLtoJSON()">YAML → JSON</button>
         <button onclick="copyYAML()">Copy</button>
         <button onclick="downloadYAML()">Download</button>
+        <button onclick="clearYAML()">Clear</button>
       </div>
 
      <textarea class="output" id="yamlOutput" readonly placeholder='Output / Errors will appear here...'></textarea>
@@ -103,6 +104,15 @@
       link.download = 'output.yml';
       link.click();
     }
+
+    function clearYAML() {
+      input.value = '';
+      output.value = '';
+    }
+
+
+
+
   </script>
 </body>
 </html>
