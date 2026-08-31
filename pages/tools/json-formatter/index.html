@@ -24,8 +24,11 @@
         <p>Paste your JSON below and click “Format”.</p>
 
         <textarea id="input" placeholder='Paste JSON here...'></textarea>
-        <br>
-        <button onclick="formatJSON()">Format</button>
+       
+       <div class="button-group">
+         <button onclick="formatJSON()">Format</button>
+         <button onclick="clearJSON()">Clear</button>
+      </div>
 
         <textarea id="output" readonly placeholder='Formatted JSON will appear here...'></textarea>
     </main>
@@ -37,7 +40,14 @@
 
   <script>
     function formatJSON() {
-      const input = document.getElementById('input').value;
+      const input = document.getElementById('input').value.trim();
+      const output = document.getElementById('output');
+
+    if (input === ''){
+        output.value = 'Please paste some JSON first. ⚠️';
+        return;
+    }
+
       try {
         const parsed = JSON.parse(input);
         document.getElementById('output').value = JSON.stringify(parsed, null, 2);
@@ -45,6 +55,12 @@
         document.getElementById('output').value = 'Invalid JSON! ❌';
       }
     }
+
+    function clearJSON() {
+    document.getElementById("input").value = "";
+    document.getElementById("output").value = "";
+   }
+
   </script>
 </body>
 </html>

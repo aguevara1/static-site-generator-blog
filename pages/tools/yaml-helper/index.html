@@ -30,7 +30,7 @@
     <div class="tool-container">
       <textarea id="yamlInput" placeholder="Paste or write your YAML here..."></textarea>
       
-      <div class="buttons">
+      <div class="button-group">
         <button onclick="validateYAML()">Validate</button>
         <button onclick="beautifyYAML()">Beautify</button>
         <button onclick="convertJSONtoYAML()">JSON → YAML</button>
@@ -56,49 +56,82 @@
     const output = document.getElementById('yamlOutput');
 
     function validateYAML() {
+       if (input.value.trim() === '') {
+            output.value = 'Please enter YAML first. ⚠️';
+            return;
+       }
+
       try {
         jsyaml.load(input.value);
-        output.textContent = '✅ YAML is valid!';
+        output.value = '✅ YAML is valid!';
       } catch (e) {
-        output.textContent = '❌ Error: ' + e.message;
+        output.value = '❌ Error: ' + e.message;
       }
     }
 
     function beautifyYAML() {
+        if (input.value.trim() === '') {
+          output.value = 'Please enter YAML first. ⚠️';
+          return;
+        }
+
       try {
         const obj = jsyaml.load(input.value);
-        output.textContent = jsyaml.dump(obj, { indent: 2 });
+        output.value = jsyaml.dump(obj, { indent: 2 });
       } catch (e) {
-        output.textContent = '❌ Error: ' + e.message;
+        output.value = '❌ Error: ' + e.message;
       }
     }
 
     function convertJSONtoYAML() {
+        if (input.value.trim() === '') {
+            output.value = 'Please enter JSON first. ⚠️';
+            return;
+         }
+
       try {
         const obj = JSON.parse(input.value);
-        output.textContent = jsyaml.dump(obj, { indent: 2 });
+        output.value = jsyaml.dump(obj, { indent: 2 });
       } catch (e) {
-        output.textContent = '❌ Error: Invalid JSON';
+        output.value = '❌ Error: Invalid JSON';
       }
     }
 
     function convertYAMLtoJSON() {
+      if (input.value.trim() === '') {
+            output.value = 'Please enter YAML first. ⚠️';
+            return;
+        }
+
       try {
         const obj = jsyaml.load(input.value);
-        output.textContent = JSON.stringify(obj, null, 2);
+        output.value = JSON.stringify(obj, null, 2);
       } catch (e) {
-        output.textContent = '❌ Error: Invalid YAML';
+        output.value = '❌ Error: Invalid YAML';
       }
     }
 
     function copyYAML() {
-      navigator.clipboard.writeText(output.textContent).then(() => {
+      if (output.value.trim() === '' || output.value === 'Please enter YAML first. ⚠️' || output.value === 'Please enter JSON first. ⚠️' || output.value === 'Please enter YAML or JSON first. ⚠️' 
+    || output.value === 'Nothing to download. ⚠️') {
+        output.value = 'Please enter YAML or JSON first. ⚠️';
+        return;
+      }
+
+      navigator.clipboard.writeText(output.value).then(() => {
         alert('Copied to clipboard!');
       });
     }
 
     function downloadYAML() {
-      const blob = new Blob([output.textContent], { type: 'text/yaml' });
+         if (output.value.trim() === '' || output.value === 'Please enter YAML first. ⚠️' || output.value === 'Please enter JSON first. ⚠️' || output.value === 'Please enter YAML or JSON first. ⚠️' 
+        || output.value === 'Nothing to download. ⚠️') 
+       {
+      output.value = 'Nothing to download. ⚠️';
+      return;
+    }
+
+      const blob = new Blob([output.value], { type: 'text/yaml' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = 'output.yml';

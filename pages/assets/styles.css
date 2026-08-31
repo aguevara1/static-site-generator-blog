@@ -77,6 +77,13 @@ nav li a:focus {
     background-color: transparent; /* prevent blue background override */
 }
 
+.pattern-header {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+ }
+
 
 textarea {
     display: block;
@@ -90,10 +97,17 @@ textarea {
     border: 1px solid #ccc;
     resize: vertical;
     }
+
+.button-group{
+    margin-top: -20px;
+    margin-bottom: 10px;
+}
+
+
  button {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 1rem;
     cursor: pointer;
     background-color: #007bff;
     color: white;
