@@ -9,6 +9,68 @@
 
 </head>
 
+ <style>
+    /* Left saved-work panel */
+    .workspace {
+      display: grid;
+      grid-template-columns: 19% 81%;
+    }
+
+    .saved-work {
+      border-right: 1px solid #ddd;
+      padding: 20px;
+    }
+
+    .saved-work ul {
+      list-style: none;
+      padding: 0;
+    }
+    .saved-work li {
+        margin-bottom: 10px;
+     }
+
+    .tool-header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+   }
+
+    .tool-header h1 {
+       font-size: 23px;
+       font-weight: 600;
+       margin: 0;
+   }
+
+
+   .tool-header button {
+       transform: translateX(-15px);
+    }
+
+  .saved-work li {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-work {
+  color: #999;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.delete-work:hover {
+  color: #555;
+}
+
+.saved-work li.active {
+  background: #eef6ff;
+  color: #1677ff;
+}
+
+  </style>
+
 
 <body>
    <nav>
@@ -18,17 +80,31 @@
          <ul>
            <li><a href="../../">Home</a></li>
            <li><a href="../index.html">Tools</a></li>
-           <li><a href="/tutorials">Blog</a></li>
-           <li><a href="/about">About</a></li>
+           <li><a href="../../about.html">About</a></li>
          </ul>
     </nav>
 
-  <main>
-    <h1>YAML Helper</h1>
-    <p>Write YAML confidently — format, validate, and convert in seconds.</p>
+    <!-- ADDED: workspace wrapper and left panel -->
+    <div class="workspace">
 
-    <div class="tool-container">
-      <textarea id="yamlInput" placeholder="Paste or write your YAML here..."></textarea>
+      <aside class="saved-work">
+        <h3>SAVED WORK</h3>
+
+        <ul id="savedWorkList">
+        </ul>
+      </aside> 
+
+  <main>
+  
+    <div class="tool-header">
+       <h1>YAML Helper</h1>
+       <button onclick="saveWork()">Save</button>
+    </div>
+    
+     <p>Write YAML confidently — format, validate, and convert in seconds.</p>
+
+   <!-- <div class="tool-container"> -->
+      <textarea id="input" placeholder="Paste or write your YAML here..."></textarea>
       
       <div class="button-group">
         <button onclick="validateYAML()">Validate</button>
@@ -40,10 +116,11 @@
         <button onclick="clearYAML()">Clear</button>
       </div>
 
-     <textarea class="output" id="yamlOutput" readonly placeholder='Output / Errors will appear here...'></textarea>
+     <textarea id="output" readonly placeholder='Output / Errors will appear here...'></textarea>
      <!-- <div class="output" id="yamlOutput">Output / Errors will appear here</div>-->
-    </div>
+   <!-- </div>  -->
   </main>
+</div>
 
   <footer>
     <p><em>made with 💜 and coffee.</em></p>
@@ -52,8 +129,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
   <script>
-    const input = document.getElementById('yamlInput');
-    const output = document.getElementById('yamlOutput');
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
 
     function validateYAML() {
        if (input.value.trim() === '') {
@@ -143,6 +220,216 @@
       output.value = '';
     }
 
+
+
+
+
+    let currentUnsavedWork = {
+      input: "",
+      output: ""
+    };
+
+    function syncUnsavedWork() {
+      if (activeWork === "unsaved") {
+         currentUnsavedWork.input = input.value;
+         currentUnsavedWork.output = output.value;
+      }
+    }
+
+     document.getElementById("input").addEventListener("input", syncUnsavedWork);
+     document.getElementById("output").addEventListener("input", syncUnsavedWork);
+
+
+    let hasUnsavedWork = false;
+    let activeWork = "unsaved";
+
+
+    function formatJSON() {
+       const input = document.getElementById('input').value.trim();
+       const output = document.getElementById('output');
+
+    if (input === ''){
+        output.value = 'Please paste some JSON first. ⚠️';
+        return;
+    }
+
+      try {
+        const parsed = JSON.parse(input);
+        output.value = JSON.stringify(parsed, null, 2);
+      } catch (e) {
+        output.value = 'Invalid JSON! ❌';
+      }
+    }
+
+
+    function clearJSON() {
+      document.getElementById("input").value = "";
+      document.getElementById("output").value = "";
+    }
+
+
+function saveWork() {
+  // Get both textareas
+    const input = document.getElementById("input").value;
+    const output = document.getElementById("output").value;
+
+  // Don't save if both are empty
+  if (input.trim() === "" && output.trim() === "") {
+    alert("There is nothing to save.")
+    return;
+  }
+
+  // Save to local storage
+  const savedWork = JSON.parse(
+    localStorage.getItem("jsonFormatterSavedWork") || "[]"
+  );
+
+  // Trimming Input and Output for Saved entry
+  const savedItem = {
+    name: input.trim().split(/\s+/).slice(0, 3).join(" ") || "Untitled",
+    input: input,
+    output: output
+  };
+
+  if (activeWork === "unsaved") {
+
+    // Create a new saved project.
+    savedWork.push(savedItem);
+
+    // Activate the new project.
+    activeWork = savedWork.length - 1;
+
+    // Clear Unsaved Work only in this case.
+    currentUnsavedWork.input = "";
+    currentUnsavedWork.output = "";
+    hasUnsavedWork = false;
+
+  } else {
+
+    // Update the existing saved project.
+    savedWork[activeWork] = savedItem;
+
+    // Leave Unsaved Work completely untouched.
+  }
+
+  localStorage.setItem(
+    "jsonFormatterSavedWork",
+    JSON.stringify(savedWork)
+  );
+
+  loadSavedWork();
+}
+
+
+
+function loadSavedWork() {
+
+      // Get existing saved work
+      const savedWork = JSON.parse(
+      localStorage.getItem("jsonFormatterSavedWork") || "[]"
+      );
+
+      // Get the saved work list from the HTML
+      const savedWorkList = document.getElementById("savedWorkList");
+
+      // Clear the current list
+      savedWorkList.innerHTML = "";
+
+      const unsavedWork = document.createElement("li");
+
+      unsavedWork.textContent = "Unsaved Work";
+      unsavedWork.style.cursor = "pointer";
+
+      savedWorkList.appendChild(unsavedWork);
+
+      if (activeWork === "unsaved") {
+         unsavedWork.classList.add("active");
+     }
+
+    // Restore the current unsaved work
+      unsavedWork.onclick = function() {
+         document.getElementById("input").value = currentUnsavedWork.input;
+         document.getElementById("output").value = currentUnsavedWork.output;
+
+         activeWork = "unsaved";
+  
+         loadSavedWork();
+      };
+
+    // Add each saved item to the sidebar
+     savedWork.forEach(function(work, index) {
+
+         const li = document.createElement("li");
+
+         if (activeWork === index) {
+           li.classList.add("active");
+         }
+
+     
+        // Saved work name
+        const name = document.createElement("span");
+        name.textContent = (work.name || `Saved #${index + 1}`).slice(0, 7);
+
+        name.style.cursor = "pointer";
+
+
+        name.onclick = function() {
+           // Preserve the latest unsaved content before leaving it.
+           syncUnsavedWork();
+
+           // Load the selected saved project.
+          document.getElementById("input").value = work.input;
+          document.getElementById("output").value = work.output;
+
+           // Activate the selected project.
+           activeWork = index;
+
+           loadSavedWork();
+        };
+
+
+       // Delete X
+       const deleteButton = document.createElement("span");
+       deleteButton.textContent = "×";
+       deleteButton.className = "delete-work";
+
+       // Delete this saved item
+       deleteButton.onclick = function(){
+
+       savedWork.splice(index, 1);
+
+       if (typeof activeWork === "number") { 
+          if (index < activeWork) {
+             activeWork--;
+        } else if (index === activeWork) {
+            activeWork = "unsaved" // Return to Unsaved Work
+            document.getElementById("input").value = currentUnsavedWork.input;
+            document.getElementById("output").value = currentUnsavedWork.output;
+          }
+       }
+
+           localStorage.setItem(
+             "jsonFormatterSavedWork",
+              JSON.stringify(savedWork)
+           );
+
+         // currentUnsavedWork.input = "";
+         // currentUnsavedWork.output = "";
+
+          hasUnsavedWork = false;
+
+          loadSavedWork();
+      };
+
+      li.appendChild(name);
+      li.appendChild(deleteButton);
+
+      savedWorkList.appendChild(li);
+
+  });
+}
+
+loadSavedWork(); // Load saved work when the page loads
 
 
 
