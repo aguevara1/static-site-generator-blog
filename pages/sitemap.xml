@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Homepage -->
+    <url>
+        <loc>https://alldev.click/</loc>
+    </url>
+
+    <!-- Main Tools Page -->
+    <url>
+        <loc>https://alldev.click/tools/</loc>
+    </url>
+
+    <!-- About Page -->
+    <url>
+        <loc>https://alldev.click/about.html</loc>
+    </url>
+
+    <!-- Featured Tools -->
+    <url>
+        <loc>https://alldev.click/tools/json-formatter/</loc>
+    </url>
+
+    <url>
+        <loc>https://alldev.click/tools/regex-tester/</loc>
+    </url>
+
+    <url>
+        <loc>https://alldev.click/tools/URLencoder-decoder/</loc>
+    </url>
+
+    <url>
+        <loc>https://alldev.click/tools/yaml-helper/</loc>
+    </url>
+
+</urlset>
